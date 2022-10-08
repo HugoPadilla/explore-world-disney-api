@@ -1,6 +1,5 @@
 import { sequelize } from '../database/database.js'
 import { DataTypes } from 'sequelize'
-import { Movie } from './Movie.js'
 
 export const Character = sequelize.define('Character', {
   id: {
@@ -15,5 +14,3 @@ export const Character = sequelize.define('Character', {
     type: DataTypes.STRING
   }
 })
-
-Character.belongsToMany(Movie, { through: 'CharacterMovies' })

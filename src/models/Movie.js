@@ -14,6 +14,3 @@ export const Movie = sequelize.define('Movie', {
     type: DataTypes.INTEGER
   }
 })
-
-Movie.belongsToMany(Character, { through: 'CharacterMovies' })
-Movie.belongsToMany(Genre, { through: 'MovieGenres' })

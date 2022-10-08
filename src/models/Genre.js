@@ -1,6 +1,5 @@
 import { sequelize } from '../database/database.js'
 import { DataTypes } from 'sequelize'
-import { Movie } from './Movie.js'
 
 export const Genre = sequelize.define(
   'Genre',
@@ -16,5 +15,3 @@ export const Genre = sequelize.define(
     }
   }
 )
-
-Genre.belongsToMany(Movie, { through: 'MovieGenres' })
