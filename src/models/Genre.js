@@ -1,8 +1,8 @@
-import { sequelize } from '../database/database'
+import { sequelize } from '../database/database.js'
 import { DataTypes } from 'sequelize'
 import { Movie } from './Movie.js'
 
-export const Genre = new sequelize.define(
+export const Genre = sequelize.define(
   'Genre',
   {
     id: {

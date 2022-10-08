@@ -1,9 +1,7 @@
-import { sequelize } from '../database/database'
+import { sequelize } from '../database/database.js'
 import { DataTypes } from 'sequelize'
-import { Character } from './Character.js'
-import { Genre } from './Genre.js'
 
-export const Movie = new sequelize.define('Movie', {
+export const Movie = sequelize.define('Movie', {
   id: {
     type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, notNull: true
   }, image: {
