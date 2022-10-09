@@ -106,3 +106,69 @@ export const insertCharacter = async (req, res) => {
     }
   }
 }
+
+export const updateCharacter = async (req, res) => {
+  try {
+    const { id } = req.params
+    const { image, name, age, weight, story } = req.body
+
+    const characterToUpdate = await Character.findByPk(id)
+    characterToUpdate.image = image
+    characterToUpdate.name = name
+    characterToUpdate.age = age
+    characterToUpdate.weight = weight
+    characterToUpdate.story = story
+
+    await characterToUpdate.save()
+
+    res.status(200).json(
+      {
+        status: 'success',
+        data: {
+          character: characterToUpdate
+        },
+        message: 'The character information has been updated'
+      }
+    )
+  } catch (error) {
+    console.error(error)
+    res.status(404).json(
+      {
+        status: 'error',
+        message: 'Character not found'
+      }
+    )
+  }
+}
+
+export const deleteCharacter = async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const numberRemoved = await Character.destroy({
+      where: {
+        id
+      }
+    })
+
+    if (numberRemoved === 0) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'Character not found'
+      })
+    }
+
+    res.status(200).json(
+      {
+        status: 'success',
+        message: 'The character has been removed',
+        data: null
+      }
+    )
+  } catch (error) {
+    res.status(404).json({
+      status: 'error',
+      message: 'Character not found'
+    })
+  }
+}
