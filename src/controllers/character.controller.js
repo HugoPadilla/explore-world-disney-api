@@ -3,7 +3,7 @@ import { Character } from '../models/Character.js'
 export const getCharacters = async (req, res) => {
   try {
     const characters = await Character.findAll({
-      attributes: ['image', 'name']
+      attributes: ['id', 'image', 'name']
     })
 
     res.status(200).json(
