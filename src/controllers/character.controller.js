@@ -1,4 +1,5 @@
 import { Character } from '../models/Character.js'
+import { Movie } from '../models/Movie.js'
 
 export const getCharacters = async (req, res) => {
   try {
@@ -32,7 +33,8 @@ export const getCharacter = async (req, res) => {
     const character = await Character.findOne({
       where: {
         id
-      }
+      },
+      include: Movie
     })
 
     if (!character) {
