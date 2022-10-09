@@ -1,10 +1,12 @@
 import express from 'express'
-import * as dotenv from 'dotenv'
+import charactersRoutes from './routes/characters.routes.js'
 
-dotenv.config()
 const app = express()
 
 // middlewares
 app.use(express.json())
+
+// routes
+app.use(charactersRoutes)
 
 export default app
