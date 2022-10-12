@@ -1,17 +1,54 @@
+import { Op } from 'sequelize'
 import { Character } from '../models/Character.js'
 import { Movie } from '../models/Movie.js'
 
 export const getCharacters = async (req, res) => {
+
+  const { name, age, movies } = req.query
+
+  let optionsQuery = {
+    attributes: ['id', 'image', 'name'],
+    order: [['name', 'ASC']]
+  }
+
+  let charactersFilter
+
   try {
-    const characters = await Character.findAll({
-      attributes: ['id', 'image', 'name']
-    })
+
+    if (name) {
+      optionsQuery = {
+        ...optionsQuery,
+        where: {
+          name: {
+            [Op.like]: `%${name}%`
+          }
+        },
+      }
+    } else if (age !== undefined) {
+      optionsQuery = {
+        ...optionsQuery,
+        where: {
+          age
+        },
+      }
+    } else if (movies !== undefined) {
+      optionsQuery = {
+        ...optionsQuery,
+        include: [{
+          model: Movie,
+          where: { id: movies }
+        }]
+      }
+    }
+
+    console.info(optionsQuery)
+    charactersFilter = await Character.findAll(optionsQuery)
 
     res.status(200).json(
       {
         status: 'success',
         data: {
-          characters: characters
+          characters: charactersFilter
         }
       }
     )
