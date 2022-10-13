@@ -14,7 +14,8 @@ export const Movie = sequelize.define('Movie', {
   },
   title: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   creation_date: {
     type: DataTypes.DATE,
