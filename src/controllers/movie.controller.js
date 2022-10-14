@@ -1,10 +1,40 @@
+import { Op } from 'sequelize'
 import { Movie } from '../models/Movie.js'
 import { Character } from '../models/Character.js'
+import { Genre } from '../models/Genre.js'
 
 export const getMovies = async (req, res) => {
+
+  const { name, genre, order } = req.query
+
+  let queryOptions = {
+    attributes: ['id', 'image', 'title', 'creation_date'],
+    order: [['title', 'ASC']]
+  }
+
   try {
-    const queryOptions = {
-      attributes: ['id', 'image', 'title', 'creation_date']
+    if (name) {
+      queryOptions = {
+        ...queryOptions,
+        where: {
+          title: {
+            [Op.like]: `%${name}%`
+          }
+        }
+      }
+    } else if (genre) {
+      queryOptions = {
+        ...queryOptions,
+        include: [{
+          model: Genre,
+          where: { id: genre }
+        }]
+      }
+    } else if (order) {
+      queryOptions = {
+        ...queryOptions,
+        order: [['creation_date', order]]
+      }
     }
 
     const movies = await Movie.findAll(queryOptions)
