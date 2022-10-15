@@ -2,6 +2,7 @@ import express from 'express'
 import morgan from 'morgan'
 import charactersRoutes from './routes/characters.routes.js'
 import moviesRoutes from './routes/movies.routes.js'
+import authenticationsRoutes from './routes/user.routes.js'
 
 const app = express()
 
@@ -12,5 +13,6 @@ app.use(morgan('dev'))
 // routes
 app.use(charactersRoutes)
 app.use('/api/v1', moviesRoutes)
+app.use('/api/v1', authenticationsRoutes)
 
 export default app
